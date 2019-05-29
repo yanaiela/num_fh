@@ -1,0 +1,483 @@
+<link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.css" media="screen" rel="stylesheet" /><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style type="text/css">p.yellow::selection {
+	    color: black;
+	    background: yellow;
+	}
+	p.yellow::-moz-selection { /* Code for Firefox */
+	    color: black;
+	    background: yellow;
+	}
+</style>
+<script type="text/javascript">
+		function getSelectionText() {
+		    var text = "";
+		    if (window.getSelection) {
+		        text = window.getSelection().toString();
+		    } else if (document.selection && document.selection.type != "Control") {
+		        text = document.selection.createRange().text;
+		    }
+		    return text;
+		};
+		function getSelectionOffSet() {
+		    var text = "";
+		    if (window.getSelection) {
+		        text = window.getSelection().anchorOffset + ';' + window.getSelection().focusOffset;
+		    }
+		    return text;
+		};
+		function cleanText(textID) {
+			document.getElementById(textID).value = ""
+		};
+		function cleanAndHide(ref, offset) {
+			hide(ref);
+			cleanText(ref);
+			cleanText(offset);
+			if (ref == 'ref') {
+				if (window.getSelection) {
+			        window.getSelection().removeAllRanges();
+			    } else if (document.selection) {
+			        document.selection.empty();
+			    }
+			}
+		};
+		document.onmouseup = document.onkeyup = document.onselectionchange = function() {
+			if (window.getSelection() && window.getSelection().focusNode && window.getSelection().focusNode.parentElement) {
+				if (window.getSelection().focusNode.parentElement.id == 'text' ) {
+					document.getElementById("ref_text").checked = true;
+					show('ref');
+					cleanAndHide('other', 'os');
+					document.getElementById("ref").value = getSelectionText();
+					document.getElementById("os").value = getSelectionOffSet();
+				}
+			}
+		};
+		window.onload = function() {document.getElementById('submitButton').setAttribute('onclick', 'return validateForm()'); }
+		function validateForm() {
+			var radios = document.getElementsByName('ans');
+	        for (var i = 0, length = radios.length; i < length; i++) {
+	            if (radios[i].checked) {
+	                if (i == 0) {
+	                	if (document.getElementById("ref").value == "") {
+	                		alert("you have to select the missing reference");
+	                		return false;
+	                	} else {
+	                		return true;
+	                	}
+	                } else if (radios[i].value == "5") {
+	                	if (document.getElementById("other").value == "") {
+	                		alert("you have to write what's missing");
+	                		return false;
+	                	} else {
+	                		return true;
+	                	}
+	                } else {
+	                	return true;
+	                }
+	                
+	            }
+	        }
+	        alert("you have to choose one of the options");
+			return false;
+		};
+
+		function checkKey(e) {
+
+		    e = e || window.event;
+		    ind = e.keyCode - 49;
+		    if (ind > 0 && ind < 8 && ind != 4 && !document.getElementsByName('ans')[4].checked) {
+		        document.getElementsByName('ans')[ind].checked = true;
+		        cleanAndHide('ref', 'os');
+		        cleanAndHide('other', 'os');
+		    }
+		    // other handling
+		    if (ind == 4 && !document.getElementsByName('ans')[4].checked) {
+		    	event.preventDefault();
+		    	cleanAndHide('ref', 'os');
+		    	document.getElementsByName('ans')[ind].checked = true;
+		    	show('other');
+		    	document.getElementById('other').focus();
+		    }
+
+		    if (e.keyCode == 13) {
+		    	document.getElementById('submitButton').click();
+		    }
+		}
+		document.onkeydown = checkKey;
+
+		
+</script>
+<section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
+<div class="row col-xs-12 col-md-12"><!-- Instructions -->
+<div class="panel panel-primary">
+<div class="panel-heading"><a href="javascript:;" onmousedown="if(document.getElementById('collapse1').style.display == 'none'){ document.getElementById('collapse1').style.display = 'block'; }else{ document.getElementById('collapse1').style.display = 'none'; }" style="color: white"><strong>Instructions (click to collapse / expand)</strong> </a></div>
+
+<div class="panel-body">
+<div id="collapse1" style="display:inline">
+<p class="red-temp">In this task, you will use your knowledge about language (and common sense) to determine what element does the marked number refer to.<br />
+There are several possible answers, you&#39;ll need to choose the proper one.</p>
+
+<p>&nbsp;</p>
+
+<h4>Work Process</h4>
+
+<ul>
+	<li>Carefully read the given text</li>
+	<li>Pay special attention to the marked number</li>
+	<li>Think about what (unwritten) information the marked number holds inside</li>
+	<li>Choose the most adequate word(s) from the optional answers. If none of them seems right to you, there&#39;s also an option for other (or none)</li>
+</ul>
+&nbsp; <!-- <h4><strong>Possible Answers</strong></h4> -->
+
+<table class="table table-condensed table-striped" style="font-size: 14px">
+	<thead>
+		<tr>
+			<th>Answer</th>
+			<th>Explanation</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Reference<sup><a href="#fn1" id="ref1">1</a></sup></td>
+			<td>Some object which is being mentioned in the text before or after the target number</td>
+		</tr>
+		<tr>
+			<td>Year</td>
+			<td>Describing a calendric year</td>
+		</tr>
+		<tr>
+			<td>Age</td>
+			<td>Describing someone's age</td>
+		</tr>
+		<tr>
+			<td>Currency</td>
+			<td>Reference to some monetary value e.g dollar, euro etc...</td>
+		</tr>
+		<tr>
+			<td>Person/People</td>
+			<td>Describing a single/plural persons</td>
+		</tr>
+		<tr>
+			<td>Time</td>
+			<td>Describing a time of the day. Usually can add the word o&#39;clock after those numbers</td>
+		</tr>
+		<tr>
+			<td>Other</td>
+			<td>Some other option, which isn&#39;t listed here. If you chose this option, please write down what&#39;s missing</td>
+		</tr>
+		<tr>
+			<td>None</td>
+			<td>Nothing is missing - there isn&#39;t a missing object, or it doesn&#39;t appear in the given text and can&#39;t be deduced unambiguously.</td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="alert alert-success">1.The Reference answer has a higher priority than any other. If both Reference and another answer are possible, prioritize the Reference<a href="#ref1"></a></div>
+<div class="alert alert-warning"><strong>Disclaimer!</strong> The given sentences were automatically extracted from movies and tv-shows. Some might include some adult language</div>
+</div>
+</div>
+</div>
+<!-- Examples -->
+
+<div class="panel panel-info">
+<div class="panel-heading"><a href="javascript:;" onmousedown="if(document.getElementById('collapse2').style.display == 'none'){ document.getElementById('collapse2').style.display = 'block'; }else{ document.getElementById('collapse2').style.display = 'none'; }"><strong>Examples (click to collapse / expand)</strong> </a></div>
+
+<div class="panel-body">
+<div class="container">
+<div id="collapse2" style="display:none"><!--  -->
+<div class="container"><!-- <h2>Examples</h2> -->
+<ul class="nav nav-tabs" style="display: inline-block;">
+	<li class="active"><a data-toggle="tab" href="#example1">Example 1</a></li>
+	<li><a data-toggle="tab" href="#example2">Example 2</a></li>
+	<li><a data-toggle="tab" href="#example3">Example 3</a></li>
+	<li><a data-toggle="tab" href="#example4">Example 4</a></li>
+	<li><a data-toggle="tab" href="#example5">Example 5</a></li>
+	<li><a data-toggle="tab" href="#example7">Example 6</a></li>
+	<li><a data-toggle="tab" href="#example8">Example 7</a></li>
+	<li><a data-toggle="tab" href="#example6">Example 8</a></li>
+</ul>
+
+<div class="tab-content">
+<div class="tab-pane fade in active" id="example1">&nbsp;
+<p id="text_example" style="font-weight:normal;">Jess Mastriani: No, I don&#39;t want another <mark>crooler</mark>, thank you very much.<br />
+FBI Agent Nicole Scott: But it&#39;s good for you. It&#39;s got... honeyglaze. Please die for this crooler, Jess.<br />
+Jess Mastriani: I&#39;ve had <strong><font color="#1b9e77" size="4">two </font></strong>already. Who eats three croolers in a night?<br />
+FBI Agent Nicole Scott: Take a look. [Nicole takes a huge bite] Mmmmm, Mmmmm, Mmmmm!<br />
+</p>
+<label>What does the number <font color="#1b9e77">two</font> refer to?</label>
+
+<table border="0" cellpadding="4" cellspacing="0" style="font-family: Verdana, Geneva, sans-serif; font-size:1em;">
+	<tbody>
+		<tr>
+			<td><input checked="checked" disabled="disabled" name="example1" type="radio" value="1" /> Reference<textarea class="form-control input-sm" cols="40" name="example1" readonly="readonly" rows="1" style="margin-top: 5px">crooler</textarea></td>
+			<td><input disabled="disabled" name="example1" type="radio" value="2" /> Year</td>
+			<td><input disabled="disabled" name="example1" type="radio" value="3" /> Age</td>
+			<td><input disabled="disabled" name="example1" type="radio" value="4" />Currency</td>
+		</tr>
+		<tr>
+			<td><input disabled="disabled" name="example1" type="radio" value="5" /> Other</td>
+			<td><input disabled="disabled" name="example1" type="radio" value="7" /> Person/People</td>
+			<td><input disabled="disabled" name="example1" type="radio" value="8" /> Time</td>
+			<td><input disabled="disabled" name="example1" type="radio" value="6" /> None</td>
+		</tr>
+	</tbody>
+</table>
+&nbsp;
+
+<p>In this example, the number <strong>two</strong> refers to something that appears in this text. In this example, it refers to the word: <strong>crooler</strong>.<br />
+So, in this case we marked the word &#39;crooler&#39; in the text, and the &#39;reference&#39; option was automatically chosen, and populated with the selection text.</p>
+</div>
+
+<div class="tab-pane fade" id="example2">&nbsp;
+<p id="text_example" style="font-weight:normal;">Adam Adamant: Do you know I haven&#39;t been to the theatre since, eh... &#39;<strong><font color="#1b9e77" size="4">96</font></strong>.<br />
+William E. Simms: Ah, what you see... [catches on]<br />
+</p>
+<label>What does the number <font color="#1b9e77">96</font> refers to?</label>
+
+<table border="0" cellpadding="4" cellspacing="0" style="font-family: Verdana, Geneva, sans-serif; font-size:1em;">
+	<tbody>
+		<tr>
+			<td><input disabled="disabled" name="example2" type="radio" value="1" /> Reference</td>
+			<td><input checked="checked" disabled="disabled" name="example2" type="radio" value="2" /> Year</td>
+			<td><input disabled="disabled" name="example2" type="radio" value="3" /> Age</td>
+			<td><input disabled="disabled" name="example2" type="radio" value="4" />Currency</td>
+		</tr>
+		<tr>
+			<td><input disabled="disabled" name="example2" type="radio" value="5" /> Other</td>
+			<td><input disabled="disabled" name="example2" type="radio" value="7" /> Person/People</td>
+			<td><input disabled="disabled" name="example2" type="radio" value="8" /> Time</td>
+			<td><input disabled="disabled" name="example2" type="radio" value="6" /> None</td>
+		</tr>
+	</tbody>
+</table>
+&nbsp;
+
+<p>In this example, the number <strong>96</strong> refers to the year 1996, resulting the Year answer being marked.</p>
+</div>
+
+<div class="tab-pane fade" id="example3">&nbsp;
+<p id="text_example" style="font-weight:normal;">Jack: Have you had dinner? If memory serves, you always liked Mitchellis.<br />
+Sydney: I haven&#39;t eaten there since I was <strong><font color="#1b9e77" size="4">eight</font></strong>.<br />
+Jack: I do eat, you know.<br />
+</p>
+<label>What does the number <font color="#1b9e77">eight</font> refers to?</label>
+
+<table border="0" cellpadding="4" cellspacing="0" style="font-family: Verdana, Geneva, sans-serif; font-size:1em;">
+	<tbody>
+		<tr>
+			<td><input disabled="disabled" name="example3" type="radio" value="1" /> Reference</td>
+			<td><input disabled="disabled" name="example3" type="radio" value="2" /> Year</td>
+			<td><input checked="checked" disabled="disabled" name="example3" type="radio" value="3" /> Age</td>
+			<td><input disabled="disabled" name="example3" type="radio" value="4" /> Currency</td>
+		</tr>
+		<tr>
+			<td><input disabled="disabled" name="example3" type="radio" value="5" /> Other</td>
+			<td><input disabled="disabled" name="example3" type="radio" value="7" /> Person/People</td>
+			<td><input disabled="disabled" name="example3" type="radio" value="8" /> Time</td>
+			<td><input disabled="disabled" name="example3" type="radio" value="6" /> None</td>
+		</tr>
+	</tbody>
+</table>
+&nbsp;
+
+<p>In this example, <strong>eight</strong> is being an indicator of an age.</p>
+</div>
+<!--  -->
+
+<div class="tab-pane fade" id="example4">&nbsp;
+<p id="text_example" style="font-weight:normal;">Joy Stark: I&#39;m paying our credit card bill.<br />
+Eddie Stark: Well why you sending them 500 dollars?<br />
+Joy Stark: Because we owe them <strong><font color="#1b9e77" size="4">1200</font></strong>.</p>
+<label>What does the number <font color="#1b9e77">1200</font> refers to?</label>
+
+<table border="0" cellpadding="4" cellspacing="0" style="font-family: Verdana, Geneva, sans-serif; font-size:1em;">
+	<tbody>
+		<tr>
+			<td><input disabled="disabled" name="example4" type="radio" value="1" /> Reference</td>
+			<td><input disabled="disabled" name="example4" type="radio" value="2" /> Year</td>
+			<td><input disabled="disabled" name="example4" type="radio" value="3" /> Age</td>
+			<td><input checked="checked" disabled="disabled" name="example4" type="radio" value="4" /> Currency</td>
+		</tr>
+		<tr>
+			<td><input disabled="disabled" name="example4" type="radio" value="5" /> Other</td>
+			<td><input disabled="disabled" name="example4" type="radio" value="7" /> Person/People</td>
+			<td><input disabled="disabled" name="example4" type="radio" value="8" /> Time</td>
+			<td><input disabled="disabled" name="example4" type="radio" value="6" /> None</td>
+		</tr>
+	</tbody>
+</table>
+&nbsp;
+
+<p>In this example, <strong>1200</strong> describes an amount of money. In this case it&#39;s dollar (but it doesn&#39;t have to be).</p>
+</div>
+<!--  -->
+
+<div class="tab-pane fade" id="example5">&nbsp;
+<p id="text_example" style="font-weight:normal;">[first lines]<br />
+Joy Stark: Okay, remember that the garbage goes out on Tuesday and if you see a man<br/> in the bushes it&#39;s probably just the gardener so please don&#39;t call <strong><font color="#1b9e77" size="4">911</font></strong>... again.</p>
+<label>What does the number <font color="#1b9e77">911</font> refers to?</label>
+
+<table border="0" cellpadding="4" cellspacing="0" style="font-family: Verdana, Geneva, sans-serif; font-size:1em;">
+	<tbody>
+		<tr>
+			<td><input disabled="disabled" name="example5" type="radio" value="1" /> Reference</td>
+			<td><input disabled="disabled" name="example5" type="radio" value="2" /> Year</td>
+			<td><input disabled="disabled" name="example5" type="radio" value="3" /> Age</td>
+			<td><input disabled="disabled" name="example5" type="radio" value="4" /> Currency</td>
+		</tr>
+		<tr><!-- <td><input name="example4" readonly="readonly" rows="1" cols="40" value="phone number" /></td> -->
+			<td><input checked="checked" disabled="disabled" name="example5" type="radio" value="7" /> Other<textarea class="form-control input-sm" cols="40" name="example5" readonly="readonly" rows="1" style="margin-top: 5px">phone number</textarea></td>
+			<td><input disabled="disabled" name="example5" type="radio" value="7" /> Person/People</td>
+			<td><input disabled="disabled" name="example5" type="radio" value="8" /> Time</td>
+			<td><input disabled="disabled" name="example5" type="radio" value="6" /> None</td>
+		</tr>
+		<tr>
+		</tr>
+	</tbody>
+</table>
+&nbsp;
+
+<p>This example doesn&#39;t contain a reference to anything in the text, neither it refers to any other possible answer. <br/>But commons sense tells us it&#39;s a phone number.<br />
+In cases like this, we mark the Other answer and write what comes to mind</p>
+</div>
+<!--  -->
+
+<div class="tab-pane fade" id="example7">&nbsp;
+<p id="text_example" style="font-weight:normal;">Terrence Shockley: You <strong><font color="#1b9e77" size="4">two</font></strong> will want to get acquainted.</p>
+<label>What does the number <font color="#1b9e77">two</font> refers to?</label>
+
+<table border="0" cellpadding="4" cellspacing="0" style="font-family: Verdana, Geneva, sans-serif; font-size:1em;">
+	<tbody>
+		<tr>
+			<td><input disabled="disabled" name="example7" type="radio" value="1" /> Reference</td>
+			<td><input disabled="disabled" name="example7" type="radio" value="2" /> Year</td>
+			<td><input disabled="disabled" name="example7" type="radio" value="3" /> Age</td>
+			<td><input disabled="disabled" name="example7" type="radio" value="4" /> Currency</td>
+		</tr>
+		<tr><!-- <td><input name="example4" readonly="readonly" rows="1" cols="40" value="phone number" /></td> -->
+			<td><input disabled="disabled" name="example7" type="radio" value="5" /> Other</td>
+			<td><input checked="checked" disabled="disabled" name="example7" type="radio" value="7" /> Person/People</td>
+			<td><input disabled="disabled" name="example7" type="radio" value="8" /> Time</td>
+			<td><input disabled="disabled" name="example7" type="radio" value="6" /> None</td>
+		</tr>
+		<tr>
+		</tr>
+	</tbody>
+</table>
+&nbsp;
+
+<p>In this example we see Terrence Shockley refers to two persons which he speaks to and refer them as <strong>two</strong>.<br />
+We do not know who those are, but those are clearly other people.</p>
+</div>
+<!--  -->
+
+<div class="tab-pane fade" id="example8">&nbsp;
+<p id="text_example" style="font-weight:normal;">Weiss: Will he ever open his eyes?<br />
+Marshall: Babies sleep, Weiss, you know. That&#39;s what they do, except when they&#39;re screaming. <br/>Last night, from midnight to <strong><font color="#1b9e77" size="4">six</font></strong>.</p>
+<label>What does the number <font color="#1b9e77">two</font> refers to?</label>
+
+<table border="0" cellpadding="4" cellspacing="0" style="font-family: Verdana, Geneva, sans-serif; font-size:1em;">
+	<tbody>
+		<tr>
+			<td><input disabled="disabled" name="example8" type="radio" value="1" /> Reference</td>
+			<td><input disabled="disabled" name="example8" type="radio" value="2" /> Year</td>
+			<td><input disabled="disabled" name="example8" type="radio" value="3" /> Age</td>
+			<td><input disabled="disabled" name="example8" type="radio" value="4" /> Currency</td>
+		</tr>
+		<tr><!-- <td><input name="example4" readonly="readonly" rows="1" cols="40" value="phone number" /></td> -->
+			<td><input disabled="disabled" name="example8" type="radio" value="5" /> Other</td>
+			<td><input disabled="disabled" name="example8" type="radio" value="7" /> Person/People</td>
+			<td><input checked="checked" disabled="disabled" name="example8" type="radio" value="8" /> Time</td>
+			<td><input disabled="disabled" name="example8" type="radio" value="6" /> None</td>
+		</tr>
+		<tr>
+		</tr>
+	</tbody>
+</table>
+&nbsp;
+
+<p>In this example, <strong>six</strong> refers to an hour in the day.<br />
+We get a strong indication for that from the midnight word which came before</p>
+</div>
+
+<div class="tab-pane fade" id="example6">&nbsp;
+<p id="text_example" style="font-weight:normal;">Raina: The other <strong><font color="#1b9e77" size="4">one</font></strong> is better.</p>
+<label>What does the number <font color="#1b9e77">one</font> refers to?</label>
+
+<table border="0" cellpadding="4" cellspacing="0" style="font-family: Verdana, Geneva, sans-serif; font-size:1em;">
+	<tbody>
+		<tr>
+			<td><input disabled="disabled" name="example6" type="radio" value="1" /> Reference</td>
+			<td><input disabled="disabled" name="example6" type="radio" value="2" /> Year</td>
+			<td><input disabled="disabled" name="example6" type="radio" value="3" /> Age</td>
+			<td><input disabled="disabled" name="example6" type="radio" value="4" /> Currency</td>
+		</tr>
+		<tr>
+			<td><input disabled="disabled" name="example6" type="radio" value="5" /> Other</td>
+			<td><input disabled="disabled" name="example6" type="radio" value="7" /> Person/People</td>
+			<td><input disabled="disabled" name="example6" type="radio" value="8" /> Time</td>
+			<td><input checked="checked" disabled="disabled" name="example6" type="radio" value="6" /> None</td>
+		</tr>
+	</tbody>
+</table>
+&nbsp;
+
+<p>In this last example, the marked number refers to something which can&#39;t be deduced from the context. <br/>Therefore, the None option is the correct answer.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- End Instructions --><!-- Content Body -->
+
+<section>
+<fieldset><script type="text/javascript">
+	        function show(ref) { document.getElementById(ref).style.display = 'block'; }
+	        function hide(ref) { document.getElementById(ref).style.display = 'none'; }
+	      	</script>
+<p class="yellow" id="text" style="font-weight:normal;">${text_reduced_html}</p>
+<br />
+<label>What does the number <font color="#1b9e77">${target}</font> refers to?</label>
+
+<table border="0" cellpadding="4" cellspacing="0" id="answer_table_id" style="font-family: Verdana, Geneva, sans-serif; font-size:1em;">
+	<tbody>
+		<tr>
+			<td><input id="ref_text" name="ans" onclick="show('ref'); cleanAndHide('other', 'os');" type="radio" value="1" /> Reference <strong>(please mark with your mouse)</strong><textarea class="form-control input-sm" cols="40" id="ref" name="reference" readonly="readonly" rows="1" style="display: none; margin-top: 5px"></textarea><textarea cols="20" id="os" name="offset" rows="1" style="display: none;"></textarea></td>
+			<td><input name="ans" onclick="cleanAndHide('ref', 'os'); cleanAndHide('other', 'os');" type="radio" value="2" /> Year</td>
+			<td><input name="ans" onclick="cleanAndHide('ref', 'os'); cleanAndHide('other', 'os');" type="radio" value="3" /> Age</td>
+			<td><input name="ans" onclick="cleanAndHide('ref', 'os'); cleanAndHide('other', 'os');" type="radio" value="4" /> Currency</td>
+		</tr>
+		<tr>
+			<td><input name="ans" onclick="cleanAndHide('ref', 'os'); show('other');" type="radio" value="5" /> Other <strong>(please specify)</strong><textarea class="form-control input-sm" cols="40" id="other" name="other" rows="1" style="display: none; margin-top: 5px"></textarea></td>
+			<td><input name="ans" onclick="cleanAndHide('ref', 'os'); cleanAndHide('other', 'os');" type="radio" value="7" /> Person/People</td>
+			<td><input name="ans" onclick="cleanAndHide('ref', 'os'); cleanAndHide('other', 'os');" type="radio" value="8" /> Time</td>
+			<td><input name="ans" onclick="cleanAndHide('ref', 'os'); cleanAndHide('other', 'os');" type="radio" value="6" /> None</td>
+		</tr>
+		<!-- <tr>
+			<td><input name="ans" onclick="cleanAndHide('ref', 'os'); cleanAndHide('other', 'os');" type="radio" value="9" /> Phrase</td>
+		</tr> -->
+	</tbody>
+</table>
+<br />
+<label>Would you like to add a comment?</label>&nbsp;<br />
+<textarea class="form-control" cols="85" id="comment" maxlength="250" name="comment" rows="2"></textarea></fieldset>
+</section>
+<!-- End Content Body</div> --></div>
+</section>
+<!-- close container -->
+<style type="text/css">fieldset { padding: 10px; background:#fbfbfb; border-radius:5px; margin-bottom:5px; }
+</style>
+<script type="text/javascript">
+	it = localStorage.getItem("seen-instructions2");
+	if (it) {
+	    document.getElementById('collapse1').style.display = 'none';
+	    document.getElementById('collapse2').style.display = 'none';
+	} else {
+	    localStorage.setItem("seen-instructions2", "True");
+	    document.getElementById('collapse1').style.display = 'block';
+	    document.getElementById('collapse2').style.display = 'block';
+	}
+	// document.getElementById('collapse1').style.display = 'block';
+    // document.getElementById('collapse2').style.display = 'block';
+</script>

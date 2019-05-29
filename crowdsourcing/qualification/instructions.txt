@@ -1,0 +1,27 @@
+<h3>In this task, you will use your knowledge about language (and common sense) to determine what element does the marked number refer to.<br/>
+There are several possible answers, you'll need to choose the proper one.</h3>
+<h2>Examples:</h2>
+<br/>
+
+<p><font size="3">"Do you know I haven't been to the theatre since, eh... '<strong><font color="#1b9e77" size="4">96</font></strong>."</font></p>
+<p><font size="2">The number <strong>96</strong> refers to a year, specifically the year 1996.</font></p>
+
+<br/>
+
+<p><font size="3">"I ordered 5 apples but got only <strong><font color="#1b9e77" size="4">4</font></strong>."</font></p>
+<p><font size="2">Here, the number <strong>4</strong> refers to the apples which were mentioned in the text before, so Reference is the correct answer.</font></p>
+
+<br/>
+
+<p><font size="3">"10 people started working for me today. <strong><font color="#1b9e77" size="4">Three</font></strong> more will start tomorrow."</font></p>
+<p><font size="2">The number <strong>Three</strong> refers to people. Even though there is a people answer, the better option is Reference.</font></p>
+
+<br/>
+
+<p><font size="3">"I haven't eaten there since I was <strong><font color="#1b9e77" size="4">eight</font></strong>."</font></p>
+<p><font size="2">The number <strong>eight</strong> refers to the age eight.</font></p>
+
+<br/>
+
+<p><font size="3"><strong>Note</strong>: There is also an option that none of those answers match - in cases that the number is part of an expression, or it can't be deduced from context - in those cases, mark the answer <strong>None</strong>.</font></p>
+<br/>		
