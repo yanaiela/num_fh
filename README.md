@@ -4,8 +4,10 @@
 This is the code used in the paper: 
 
 **"Where’s My Head? Definition, Dataset and Models for Numeric Fused-Heads Identification and Resolution"**
-Yanai Elazar and Yoav Goldberg,
+Yanai Elazar and Yoav Goldberg
+
 to appear in TACL
+
 [preprint](https://arxiv.org/pdf/1905.10886.pdf)
 and there's also a [demo](http://nlp.biu.ac.il/~lazary/fh/)!
 
