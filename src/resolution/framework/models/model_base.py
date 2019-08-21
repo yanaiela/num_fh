@@ -154,7 +154,6 @@ class NfhDetector(Model):
             anchor_ind_end = dim[-1].item()
             anchor_vec = encoder_out[ind, anchor_ind_start, :]
             for i in range(anchor_ind_start + 1, anchor_ind_end):
-                # anchor_vec += encoder_out[ind, i, :]
                 anchor_vec = anchor_vec + encoder_out[ind, i, :]
             anchor_vec = torch.div(anchor_vec, anchor_ind_end - anchor_ind_start + 1)
             anchors.append(anchor_vec)

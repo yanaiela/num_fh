@@ -10,7 +10,6 @@ Options:
 
 """
 
-import sys
 import json
 from docopt import docopt
 
@@ -19,9 +18,6 @@ from allennlp.predictors import Predictor
 
 from tqdm import tqdm
 
-# sys.path.append('models/')
-# sys.path.append('dataset_readers/')
-# sys.path.append('predictors/')
 from src.resolution.framework.models.model_base import NfhDetector
 from src.resolution.framework.dataset_readers.nfh_reader import NFHReader
 from src.resolution.framework.dataset_readers.nfh_oracle_reader import NFHReader as OracleNFHReader
@@ -101,8 +97,8 @@ if __name__ == '__main__':
 
     data_dir = arguments['--data_dir']
 
-    lines_dev = get_data(data_dir + '/json_dev.txt')
-    lines_test = get_data(data_dir + '/json_test.txt')
+    lines_dev = get_data(data_dir + '/json_dev.jsonl')
+    lines_test = get_data(data_dir + '/json_test.jsonl')
 
     preds_dev = get_batched_predictions(predictor, lines_dev, limit=1000, bs=20)
     preds_test = get_batched_predictions(predictor, lines_test, limit=1000, bs=20)

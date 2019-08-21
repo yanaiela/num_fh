@@ -114,9 +114,9 @@ def main():
     out_d = arguments['--out_dir']
     window_size = int(arguments['--window_size'])
 
-    train = parse_file(data_f + '/train')
-    dev = parse_file(data_f + '/dev')
-    test = parse_file(data_f + '/test')
+    train = parse_file(data_f + '/train.tsv')
+    dev = parse_file(data_f + '/dev.tsv')
+    test = parse_file(data_f + '/test.tsv')
 
     fe = FeatureExtractor(window_size, not arguments['--no_pos'], not arguments['--no_dep'])
 

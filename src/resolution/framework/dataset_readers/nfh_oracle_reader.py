@@ -95,62 +95,6 @@ class NFHReader(DatasetReader):
 
         return Instance(fields)
 
-    def text_to_instance_old(self, scene: DataFrameGroupBy) -> Instance:
-        # getting the scene from each group and reindexing inner index in every group
-
-        fields: Dict[str, Field] = {}
-
-        # fields['words_ind'] = scene['index'].tolist()
-        # fields['lines_ind'] = scene['line_ind'].tolist()
-        # fields['speakers'] = scene['speaker'].tolist()
-
-        target = scene[scene['head'] != '-']
-        if len(target) == 0:
-            assert False, scene['id'].tolist()[0]
-
-        target_words = scene[scene['head'] != '-']
-        assert len(target_words) > 0
-
-        target_span = target_words.index.tolist()
-
-        # sentence = scene['word'].tolist()
-        # tar = target_words['word'].tolist()
-        # fields['tar'] = target_words['word'].tolist()
-        sentence_words = scene['word'].tolist()
-        sentence = TextField([Token(t) for t in sentence_words], self._token_indexers)
-        fields['sentence'] = sentence
-        fields['anchor_span'] = SpanField(target_span[0], target_span[-1], sentence)
-
-        target_class = scene[scene['head'] != '-']['head'].tolist()[0]
-        if target_class in self._span_d:  # `Implicit` classes
-            head = self._span_d[target_class]
-        else:  # `Reference` classes
-            ref = scene[scene['referred'] != '-']
-            assert len(ref) > 0, scene['id'].tolist()[0]
-            l = ref.index.tolist()
-
-            # picking the closest head of the anchor
-            head_ref = scene.loc[[l[0]]]['word'].tolist()
-            closest_ref = l[0]
-            closest_dist = abs(closest_ref - target_words.index[0])
-            for i in range(len(l)):
-                new_dist = abs(l[i] - target_words.index[0])
-                if new_dist < closest_dist:
-                    closest_dist = new_dist
-                    closest_ref = l[i]
-
-            ref_ind = str(closest_ref) + ':' + str(closest_ref + 1)
-            head = self._span_d[ref_ind]
-
-            # fields['head'] = head
-            # fields['ref_ind'] = ref_ind
-            # fields['head_ref'] = head_ref
-
-        fields['label'] = LabelField(head, skip_indexing=True)
-        # if sentence_tags:
-        #     fields['sentence_tags'] = SequenceLabelField(sentence_tags, sentence_field)
-        return Instance(fields)
-
     def _setting_output_span_indices(self, span_len, additional_classes):
         """
         creating a dictionary from the labels (year, age, etc. and spans indices) to integers
