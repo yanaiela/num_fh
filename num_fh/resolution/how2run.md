@@ -43,8 +43,8 @@ Then for evaluating the models, with the restrictive evaluation
  breakdown, run the following:
 
 ```
-python -m src.resolution.framework.evaluate \
-        --model src/allen_logs/elmo/model.tar.gz \
+python -m num_fh.resolution.framework.evaluate \
+        --model num_fh/allen_logs/elmo/model.tar.gz \
         --data_dir data/resolution/processed/ --cuda 0
 ```
 and accordingly with any other relevant model 

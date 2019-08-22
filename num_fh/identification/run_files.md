@@ -11,7 +11,7 @@ FH or not-FH, and finally creating an ML model for solving it.
 ### Converting a corpora into sentences
 ```
 mkdir data/identification/imdb
-python src/identification/data/process_sentences.py \
+python num_fh/identification/data/process_sentences.py \
   --imdb_file data/identification/imdb/shows.json \
   --out_file data/identification/imdb/trees/sentences.txt
 ```
@@ -40,7 +40,7 @@ java -Xmx200g -cp "$STANFORD_CORENLP_HOME/*" edu.stanford.nlp.pipeline.StanfordC
 ```
 # update the script find_fh.py with the parameter stanford_parser_dir with the
 # relevant directory of stanford parser
-python src/identification/data/tree2numeric_fh.py \
+python num_fh/identification/data/tree2numeric_fh.py \
   --imdb_file data/identification/imdb/shows.json \
   --trees_path data/identification/imdb/trees/ \
   --out_path data/identification/processed/
@@ -50,7 +50,7 @@ python src/identification/data/tree2numeric_fh.py \
 ```
 # Building and saving the data features in a pickle for 
 # fast experiments with models
-python src/identification/features/build_features.py \
+python num_fh/identification/features/build_features.py \
   --data_dir data/identification/processed/ \
   --out_dir data/identification/pickled/ \
   --window_size 3
@@ -58,7 +58,7 @@ python src/identification/features/build_features.py \
 
 ### Running the model
 ```
-python src/identification/models/linear_model.py \
+python num_fh/identification/models/linear_model.py \
   --data_dir data/identification/pickled/ \
   --model_out models/is_nfh.pkl 
 ```

@@ -4,7 +4,8 @@ gensim
 numpy
 sklearn
 click
-stanfordcorenlp=3.8.0.1
-spacy==1.9.0
+stanfordcorenlp==3.8.0.1
+spacy
 nltk
 statsmodels
+allennlp

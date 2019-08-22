@@ -25,12 +25,12 @@ def get_data(path):
     :param path: path to the data directory
     :return: train, dev and test data - both features and labels
     """
-    x_train = np.load(path + '/x_train.npy')
-    y_train = np.load(path + '/y_train.npy')
-    x_dev = np.load(path + '/x_dev.npy')
-    y_dev = np.load(path + '/y_dev.npy')
-    x_test = np.load(path + '/x_test.npy')
-    y_test = np.load(path + '/y_test.npy')
+    x_train = np.load(path + '/x_train.npy', allow_pickle=True)
+    y_train = np.load(path + '/y_train.npy', allow_pickle=True)
+    x_dev = np.load(path + '/x_dev.npy', allow_pickle=True)
+    y_dev = np.load(path + '/y_dev.npy', allow_pickle=True)
+    x_test = np.load(path + '/x_test.npy', allow_pickle=True)
+    y_test = np.load(path + '/y_test.npy', allow_pickle=True)
 
     return x_train, y_train, x_dev, y_dev, x_test, y_test
 

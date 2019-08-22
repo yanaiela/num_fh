@@ -18,10 +18,10 @@ from allennlp.predictors import Predictor
 
 from tqdm import tqdm
 
-from src.resolution.framework.models.model_base import NfhDetector
-from src.resolution.framework.dataset_readers.nfh_reader import NFHReader
-from src.resolution.framework.dataset_readers.nfh_oracle_reader import NFHReader as OracleNFHReader
-from src.resolution.framework.predictors.model_base_predictor import NfhDetectorPredictor
+from num_fh.resolution.framework.models.model_base import NfhDetector
+from num_fh.resolution.framework.dataset_readers.nfh_reader import NFHReader
+from num_fh.resolution.framework.dataset_readers.nfh_oracle_reader import NFHReader as OracleNFHReader
+from num_fh.resolution.framework.predictors.model_base_predictor import NfhDetectorPredictor
 
 
 implicit_classes = ['YEAR', 'AGE', 'CURRENCY', 'PEOPLE', 'TIME', 'OTHER']

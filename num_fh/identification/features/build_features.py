@@ -22,8 +22,8 @@ from tqdm import tqdm
 
 class FeatureExtractor(object):
 
-    def __init__(self, window_size, use_dep, use_pos):
-        nlp = spacy.load('en')
+    def __init__(self, window_size, use_dep=True, use_pos=True):
+        nlp = spacy.load('en_core_web_sm')
         old_tokenizer = nlp.tokenizer
         nlp.tokenizer = lambda string: old_tokenizer.tokens_from_list(self.my_split_function(string))
 
@@ -90,7 +90,7 @@ class FeatureExtractor(object):
         """
         X, y = [], []
 
-        for row in tqdm(data):
+        for row in tqdm(data[:20]):
             X.append((self.build_features(row[0], row[1:3])))
             y.append(row[3])
 
@@ -105,7 +105,7 @@ def parse_file(in_f):
     """
     df = pd.read_csv(in_f, sep='\t', keep_default_na=False, encoding='utf-8')
     df.text = df.text.apply(lambda text: text.split(FeatureExtractor.SEP))
-    return df.as_matrix()
+    return df.values
 
 
 def main():
