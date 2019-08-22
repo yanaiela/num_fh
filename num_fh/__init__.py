@@ -1,5 +1,4 @@
 # coding: utf8
-from __future__ import unicode_literals
 
 from os import path
 import pickle
@@ -95,10 +94,6 @@ class NFH(object):
 
         tokens = [w.text for w in doc]
         for fh_span in fhs:
-            # TODO - deal with the span level
-            # demo fail on the following example:
-            # How much was it? Two hundred, but I'll tell him its fifty.
-            # TODO
 
             # for every fused head found
             span = doc[fh_span[0]: fh_span[1]]
@@ -108,34 +103,32 @@ class NFH(object):
             nfhs = doc._.get(self._nfh_items)
             nfhs.append(span)
 
+            is_deter, is_implicit, head = False, False, None
+
             # deterministic numeric fused-heads
             deter = self.find_deterministic(doc, fh_span)
             if deter:
-                for token in span:
-                    token._.set(self._is_deter_nfh, True)
-                    if deter in IMPLICIT:
-                        token._.set(self._is_implicit, True)
-                        token._.set(self._nfh_head, deter)
-                    else:
-                        token._.set(self._nfh_head, doc[deter])
+                is_deter = True
+                head = deter
 
             # otherwise, fallback to a statistical model
             else:
+                is_deter = False
+
                 # accounting for the starting token of elmo
-                if fh_span[1] - fh_span[0] > 1:
-                    fh_fix = [fh_span[0] + 1, fh_span[1] + 1]
-                else:
-                    fh_fix = [fh_span[0] + 1]
+                fh_fix = [x + 1 for x in fh_span]
                 data = self.data4prediction(tokens, fh_fix)
-                ans = self.resolve_prediction(data)
-                if ans in IMPLICIT:
-                    for token in span:
-                        token._.set(self._is_implicit, True)
-                        token._.set(self._nfh_head, ans)
+                head = self.resolve_prediction(data)
+
+            for token in span:
+                token._.set(self._is_deter_nfh, is_deter)
+                token._.set(self._is_implicit, is_implicit)
+                if head in IMPLICIT:
+                    token._.set(self._is_implicit, True)
+                    token._.set(self._nfh_head, head)
                 else:
-                    for token in span:
-                        token._.set(self._is_implicit, False)
-                        token._.set(self._nfh_head, doc[ans])
+                    token._.set(self._is_implicit, False)
+                    token._.set(self._nfh_head, doc[head])
 
         return doc
 
@@ -208,15 +201,8 @@ class NFH(object):
         return json_example
 
     def has_nfh(self, tokens):
-        return any(token._.get(self._is_nfh) for token in tokens)
+        return len(tokens[0].doc._.get(self._nfh_items)) > 0
 
     def iter_nfh(self, tokens):
 
         return tokens[0].doc._.get(self._nfh_items)
-        # start_ind = 0
-        # for i, t in enumerate(nfhs):
-        #     if t._.get(self._is_nfh):
-        #         if
-        # return [(t.text, i, t._.get(self._nfh_head))
-        #         for i, t in enumerate(tokens)
-        #         if t._.get(self._is_nfh)]
