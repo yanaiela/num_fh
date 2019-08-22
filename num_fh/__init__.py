@@ -129,12 +129,12 @@ class NFH(object):
                 data = self.data4prediction(tokens, fh_fix)
                 ans = self.resolve_prediction(data)
                 if ans in IMPLICIT:
-                    token._.set(self._is_implicit, True)
-                    for token in doc:
+                    for token in span:
+                        token._.set(self._is_implicit, True)
                         token._.set(self._nfh_head, ans)
                 else:
-                    token._.set(self._is_implicit, False)
-                    for token in doc:
+                    for token in span:
+                        token._.set(self._is_implicit, False)
                         token._.set(self._nfh_head, doc[ans])
 
         return doc
