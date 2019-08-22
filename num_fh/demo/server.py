@@ -57,15 +57,16 @@ def add_annotation(doc):
 
     resolved_nfhs = []
     for nfh in nfhs:
-        ind = nfh[1]
+        # ind = nfh[0].i
+        nfh_first_token = nfh[0]
 
-        start_ind = len(doc[:ind].text_with_ws)
-        end_ind = start_ind + len(doc[ind].text_with_ws)
+        start_ind = len(doc[:nfh_first_token.i].text_with_ws)
+        end_ind = start_ind + len(nfh.text_with_ws)
 
         entity = {'start': start_ind, 'end': end_ind}
-        if doc[ind]._.is_implicit:
-            label = nfh[2]
-            if doc[ind]._.is_deter_nfh:
+        if nfh_first_token._.is_implicit:
+            label = nfh_first_token._.nfh_head
+            if nfh_first_token._.is_deter_nfh:
                 label += ' (DETER)'
             entity['label'] = label
             resolved_nfhs.append(entity)
@@ -74,13 +75,13 @@ def add_annotation(doc):
             entity['label'] = label
             resolved_nfhs.append(entity)
 
-            head = nfh[2]
+            head = nfh_first_token._.nfh_head
             head_ind = head.i
             head_start_ind = len(doc[:head_ind].text_with_ws)
             head_end_ind = head_start_ind + len(doc[head_ind].text_with_ws)
 
             label = 'REFERENCE'
-            if doc[ind]._.is_deter_nfh:
+            if nfh_first_token._.is_deter_nfh:
                 label += ' (DETER)'
             head_entity = {'start': head_start_ind, 'end': head_end_ind, 'label': label}
             resolved_nfhs.append(head_entity)

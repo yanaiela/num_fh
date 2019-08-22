@@ -66,6 +66,7 @@ class NFH(object):
 
         self._has_nfh, self._is_nfh, self._nfh, self._is_deter_nfh, \
             self._nfh_head, self._is_implicit = attrs
+        self._nfh_items = 'nfh_items'
 
         # Add attributes
         Doc.set_extension(self._has_nfh, getter=self.has_nfh, force=force_extension)
@@ -74,10 +75,13 @@ class NFH(object):
         Doc.set_extension(self._nfh, getter=self.iter_nfh, force=force_extension)
         Span.set_extension(self._nfh, getter=self.iter_nfh, force=force_extension)
 
+        Span.set_extension(self._is_nfh, default=False, force=force_extension)
         Token.set_extension(self._is_nfh, default=False, force=force_extension)
         Token.set_extension(self._is_deter_nfh, default=False, force=force_extension)
         Token.set_extension(self._nfh_head, default=None, force=force_extension)
         Token.set_extension(self._is_implicit, default=False, force=force_extension)
+
+        Doc.set_extension(self._nfh_items, default=[], force=force_extension)
 
     def __call__(self, doc):
         """Apply the pipeline component to a `Doc` object.
@@ -91,11 +95,18 @@ class NFH(object):
 
         tokens = [w.text for w in doc]
         for fh_span in fhs:
+            # TODO - deal with the span level
+            # demo fail on the following example:
+            # How much was it? Two hundred, but I'll tell him its fifty.
+            # TODO
 
             # for every fused head found
             span = doc[fh_span[0]: fh_span[1]]
             for token in span:
                 token._.set(self._is_nfh, True)
+            span._.set(self._is_nfh, True)
+            nfhs = doc._.get(self._nfh_items)
+            nfhs.append(span)
 
             # deterministic numeric fused-heads
             deter = self.find_deterministic(doc, fh_span)
@@ -186,7 +197,6 @@ class NFH(object):
     def resolve_prediction(self, data: Dict):
         val = self.resolution_predictor.predict_json(data)
         ans = val['y_hat']
-        # return ans
         if ans < len(IMPLICIT):
             return IMPLICIT[ans]
         else:
@@ -201,6 +211,12 @@ class NFH(object):
         return any(token._.get(self._is_nfh) for token in tokens)
 
     def iter_nfh(self, tokens):
-        return [(t.text, i, t._.get(self._nfh_head))
-                for i, t in enumerate(tokens)
-                if t._.get(self._is_nfh)]
+
+        return tokens[0].doc._.get(self._nfh_items)
+        # start_ind = 0
+        # for i, t in enumerate(nfhs):
+        #     if t._.get(self._is_nfh):
+        #         if
+        # return [(t.text, i, t._.get(self._nfh_head))
+        #         for i, t in enumerate(tokens)
+        #         if t._.get(self._is_nfh)]
