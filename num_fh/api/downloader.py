@@ -38,7 +38,7 @@ def download_models():
 
     resolution_path = path.join(home, NFH_DIR, RESOLUTION_NFH)
     if not path.exists(resolution_path):
-        print('couldn\'t find the resolution model. downloading one [identification model]')
+        print('couldn\'t find the resolution model. downloading one [resolution model]')
         download_url(NFH_URL + RESOLUTION_NFH, resolution_path)
 
 

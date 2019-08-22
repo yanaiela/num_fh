@@ -18,6 +18,18 @@ nlp = spacy.load('en_core_web_sm')
 nfh = NFH(nlp)
 nlp.add_pipe(nfh, first=False)
 
+colors = {'REFERENCE': '#428bca',
+          'REFERENCE (DETER)': '#e4e7d2',
+          'YEAR': '#5cb85c',
+          'AGE': '#ffbb33',
+          'CURRENCY': '#5bc0de',
+          'PEOPLE': '#d9534f',
+          'PEOPLE (DETER)': '#d9534f',
+          'TIME': '#757575',
+          'OTHER': '#e0e0e0',
+          'FH': '#c887fb'}
+options = {'colors': colors}
+
 
 def get_logger(model_dir):
     time = str(datetime.now()).replace(' ', '-')
@@ -93,7 +105,7 @@ def serve():
         labeled = add_annotation(doc)
         logger.info('ans: ' + str(labeled))
         ans['ents'] = labeled
-        html = displacy.render(ans, style="ent", manual=True)
+        html = displacy.render(ans, style="ent", manual=True, options=options)
     except Exception as e:
         logger.info('error. ' + str(e))
         html = 'some error occurred while trying to find the NFH'

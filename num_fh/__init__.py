@@ -102,7 +102,6 @@ class NFH(object):
             if deter:
                 for token in span:
                     token._.set(self._is_deter_nfh, True)
-                    print(deter)
                     if deter in IMPLICIT:
                         token._.set(self._is_implicit, True)
                         token._.set(self._nfh_head, deter)
