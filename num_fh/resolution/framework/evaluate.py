@@ -97,8 +97,8 @@ if __name__ == '__main__':
 
     data_dir = arguments['--data_dir']
 
-    lines_dev = get_data(data_dir + '/json_dev.jsonl')
-    lines_test = get_data(data_dir + '/json_test.jsonl')
+    lines_dev = get_data(data_dir + '/nfh_dev.jsonl')
+    lines_test = get_data(data_dir + '/nfh_test.jsonl')
 
     preds_dev = get_batched_predictions(predictor, lines_dev, limit=1000, bs=20)
     preds_test = get_batched_predictions(predictor, lines_test, limit=1000, bs=20)

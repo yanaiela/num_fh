@@ -79,10 +79,10 @@ def add_annotation(doc):
             head_start_ind = len(doc[:head_ind].text_with_ws)
             head_end_ind = head_start_ind + len(doc[head_ind].text_with_ws)
 
-            label = 'REFERENCE'
+            head_label = 'REFERENCE'
             if nfh_first_token._.is_deter_nfh:
-                label += ' (DETER)'
-            head_entity = {'start': head_start_ind, 'end': head_end_ind, 'label': label}
+                head_label += ' (DETER)'
+            head_entity = {'start': head_start_ind, 'end': head_end_ind, 'label': head_label}
             resolved_nfhs.append(head_entity)
 
     # removing duplicate references, based on the starting index
@@ -101,10 +101,15 @@ def serve():
 
     try:
         doc = nlp(text)
-        ans = {'text': doc.text, 'title': None}
+        logger.info(doc._.nfh)
+
         labeled = add_annotation(doc)
+        # sorting the starting index of the labels, as spacy's renderer expects
+        labeled = sorted(labeled, key=lambda k: k['start'])
         logger.info('ans: ' + str(labeled))
-        ans['ents'] = sorted(labeled, key=lambda k: k['start'])
+
+        ans = {'text': doc.text, 'title': None,
+               'ents': labeled}
         html = displacy.render(ans, style="ent", manual=True, options=options)
     except Exception as e:
         logger.info('error. ' + str(e))

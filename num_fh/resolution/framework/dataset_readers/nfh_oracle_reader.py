@@ -9,7 +9,6 @@ from allennlp.data.instance import Instance
 from allennlp.data.token_indexers import SingleIdTokenIndexer, TokenIndexer
 from allennlp.data.tokenizers import Token
 from overrides import overrides
-from pandas.core.groupby import DataFrameGroupBy
 
 logger = logging.getLogger(__name__)
 

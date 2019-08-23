@@ -1,4 +1,5 @@
-// Configuration for a the method used in tacl paper
+// Configuration for a the baseline model with Elmo embeddings used in tacl paper.
+// This version uses oracle separation between Implicit and Reference
 
 local data_path = "../../data/resolution/processed/";
 local emb_dim = 1024;
@@ -13,9 +14,9 @@ local emb_out = 200;
 	},
     "oracle_head": "ref"
   },
-  "train_data_path": data_path + "json_train.txt",
-  "validation_data_path": data_path + "json_dev.txt",
-  "test_data_path": data_path + "json_test.txt",
+  "train_data_path": "https://storage.googleapis.com/ai2i/datasets/num_fh/nfh_train.jsonl",
+  "validation_data_path": "https://storage.googleapis.com/ai2i/datasets/num_fh/nfh_dev.jsonl",
+  "test_data_path": "https://storage.googleapis.com/ai2i/datasets/num_fh/nfh_train.jsonl",
   "evaluate_on_test": true,
 
   "model": {

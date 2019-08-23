@@ -1,4 +1,5 @@
-// Configuration for a the method used in tacl paper
+// Configuration for a the baseline model with w2v embeddings used in tacl paper
+
 
 local data_path = "../../data/resolution/processed/";
 local emb_dim = 300;
@@ -13,9 +14,9 @@ local char_out = 50;
             "token_characters": { "type": "characters" }
         }
   },
-  "train_data_path": data_path + "json_train.txt",
-  "validation_data_path": data_path + "json_dev.txt",
-  "test_data_path": data_path + "json_test.txt",
+  "train_data_path": "https://storage.googleapis.com/ai2i/datasets/num_fh/nfh_train.jsonl",
+  "validation_data_path": "https://storage.googleapis.com/ai2i/datasets/num_fh/nfh_dev.jsonl",
+  "test_data_path": "https://storage.googleapis.com/ai2i/datasets/num_fh/nfh_train.jsonl",
   "evaluate_on_test": true,
 
   "model": {
