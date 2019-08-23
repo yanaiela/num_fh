@@ -57,7 +57,6 @@ def add_annotation(doc):
 
     resolved_nfhs = []
     for nfh in nfhs:
-        # ind = nfh[0].i
         nfh_first_token = nfh[0]
 
         start_ind = len(doc[:nfh_first_token.i].text_with_ws)

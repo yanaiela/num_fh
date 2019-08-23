@@ -65,6 +65,14 @@ These are dealt with separately, and discussed in the paper in sections
 contain further instructions for each one in dedicated README files:
 [Identification](num_fh/identification/run_files.md) and [Resolution](num_fh/resolution/how2run.md)
 
+
+#### Demo
+To run the demo, run the following:
+```bash
+export FLASK_APP=num_fh/demo/server.py
+flask run --port 5000 --host ""
+```
+
 ## Citing
 If you find this work relevant to yours, please consider citing us:
 ```
