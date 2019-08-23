@@ -104,7 +104,7 @@ def serve():
         ans = {'text': doc.text, 'title': None}
         labeled = add_annotation(doc)
         logger.info('ans: ' + str(labeled))
-        ans['ents'] = labeled
+        ans['ents'] = sorted(labeled, key=lambda k: k['start'])
         html = displacy.render(ans, style="ent", manual=True, options=options)
     except Exception as e:
         logger.info('error. ' + str(e))
