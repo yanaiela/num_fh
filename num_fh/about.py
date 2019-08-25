@@ -1,5 +1,5 @@
 __title__ = 'num_fh'
-__version__ = '1.1.0'
+__version__ = '1.1.1'
 __summary__ = 'numeric fused-head identification and resolution'
 __uri__ = 'http://nlp.biu.ac.il/~lazary/fh/'
 __author__ = 'Yanai Elazar and Yoav Goldberg'

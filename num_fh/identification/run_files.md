@@ -60,5 +60,5 @@ python num_fh/identification/features/build_features.py \
 ```
 python num_fh/identification/models/linear_model.py \
   --data_dir data/identification/pickled/ \
-  --model_out models/is_nfh.pkl 
+  --model_out models/is_nfh.pkl
 ```

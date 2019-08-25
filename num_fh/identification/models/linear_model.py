@@ -60,6 +60,8 @@ def inspect(model, x_test, y_test, text_test):
 
 
 if __name__ == '__main__':
+
+    np.random.seed(16)
     arguments = docopt(__doc__)
 
     data_d = arguments['--data_dir']

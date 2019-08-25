@@ -9,3 +9,4 @@ spacy
 nltk
 statsmodels
 allennlp
+Flask
