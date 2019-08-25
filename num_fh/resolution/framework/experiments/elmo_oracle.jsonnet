@@ -16,7 +16,7 @@ local emb_out = 200;
   },
   "train_data_path": "https://storage.googleapis.com/ai2i/datasets/num_fh/nfh_train.jsonl",
   "validation_data_path": "https://storage.googleapis.com/ai2i/datasets/num_fh/nfh_dev.jsonl",
-  "test_data_path": "https://storage.googleapis.com/ai2i/datasets/num_fh/nfh_train.jsonl",
+  "test_data_path": "https://storage.googleapis.com/ai2i/datasets/num_fh/nfh_test.jsonl",
   "evaluate_on_test": true,
 
   "model": {

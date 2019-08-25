@@ -90,7 +90,7 @@ class FeatureExtractor(object):
         """
         X, y = [], []
 
-        for row in tqdm(data[:20]):
+        for row in tqdm(data):
             X.append((self.build_features(row[0], row[1:3])))
             y.append(row[3])
 
