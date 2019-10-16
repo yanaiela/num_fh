@@ -76,10 +76,16 @@ flask run --port 5000 --host ""
 ## Citing
 If you find this work relevant to yours, please consider citing us:
 ```
-@misc{elazar2019wheres,
-    title={Where's My Head? Definition, Dataset and Models for Numeric Fused-Heads Identification and Resolution},
-    author={Yanai Elazar and Yoav Goldberg},
-    year={2019}
+@article{elazar_head,
+author = {Elazar, Yanai and Goldberg, Yoav},
+title = {Where’s My Head? Definition, Data Set, and Models for Numeric Fused-Head Identification and Resolution},
+journal = {Transactions of the Association for Computational Linguistics},
+volume = {7},
+number = {},
+pages = {519-535},
+year = {2019},
+doi = {10.1162/tacl\_a\_00280},
+URL = {https://doi.org/10.1162/tacl_a_00280},
 }
 ```
 
